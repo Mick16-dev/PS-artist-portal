@@ -1,20 +1,19 @@
 import { createClient } from '@supabase/supabase-js'
-import { GeistSans } from 'geist/font/sans'
-import { GeistMono } from 'geist/font/mono'
 import { PortalClient } from '@/components/PortalClient'
 import { InvalidToken } from '@/components/InvalidToken'
 import { ExpiredToken } from '@/components/ExpiredToken'
 import { Welcome } from '@/components/Welcome'
+import { Loader2 } from 'lucide-react'
 
-// Server-side Supabase client for secure data fetching
+// Server-side Supabase client
 function getSupabase() {
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  
+  if (!url || !key) {
     throw new Error('Supabase environment variables are missing')
   }
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  )
+  return createClient(url, key)
 }
 
 export default async function PortalPage({
@@ -24,66 +23,76 @@ export default async function PortalPage({
 }) {
   const { token } = await searchParams
 
-  // No token in URL - Show Landing Page
   if (!token) {
     return <Welcome />
   }
 
   const supabase = getSupabase()
 
-  // Step 1: Validate token — check if it exists at all
+  // 1 & 2. Validate token (ignoring expiry for a moment to check existence)
   const { data: tokenMaterial, error: tokenError } = await supabase
     .from('materials')
     .select('*')
     .eq('portal_token', token)
-    .limit(1)
     .single()
 
-  // Token not found at all
+  // Invalid Token
   if (tokenError || !tokenMaterial) {
     return <InvalidToken />
   }
 
-  // Step 2: Check expiry
+  // 3. Check if expired (compared to current server time)
   if (tokenMaterial.expires_at && new Date(tokenMaterial.expires_at) < new Date()) {
     return <ExpiredToken expiresAt={tokenMaterial.expires_at} />
   }
 
-  const showId = tokenMaterial.show_id
-  const artistId = tokenMaterial.artist_id
+  const { show_id, artist_id } = tokenMaterial
 
-  // Step 3: Fetch ALL materials for this show
+  // 4. Fetch ALL materials for this show
   const { data: materials, error: matsError } = await supabase
     .from('materials')
     .select('*')
-    .eq('show_id', showId)
+    .eq('show_id', show_id)
     .order('deadline', { ascending: true })
 
-  // Step 4: Fetch show details
+  // 5. Fetch show details
   const { data: show, error: showError } = await supabase
     .from('shows')
     .select('*')
-    .eq('id', showId)
+    .eq('id', show_id)
     .single()
 
-  // Step 5: Fetch artist details
+  // 6. Fetch artist details
   const { data: artist, error: artistError } = await supabase
     .from('artists')
     .select('*')
-    .eq('id', artistId)
+    .eq('id', artist_id)
     .single()
 
+  // Error handling for data fetch
   if (matsError || showError || artistError || !show || !artist || !materials) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4">
-        <div className="text-center max-w-md">
-          <p className="text-gray-600 text-lg font-medium">Unable to load your documents.</p>
-          <p className="text-gray-400 mt-2">Please refresh the page or contact your promoter.</p>
+      <div className="min-h-screen flex items-center justify-center p-6 bg-white antialiased">
+        <div className="text-center max-w-sm space-y-4">
+          <div className="w-12 h-12 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
+            <AlertCircle size={24} />
+          </div>
+          <h2 className="text-2xl font-extrabold text-gray-900 tracking-tight">Unable to load your documents</h2>
+          <p className="text-gray-500 leading-relaxed">
+            There was a problem connecting to our servers. Please refresh the page or contact your promoter directly.
+          </p>
+          <button 
+            onClick={() => window.location.reload()}
+            className="mt-4 font-bold text-indigo-600 hover:text-indigo-700 bg-indigo-50 px-6 py-2 rounded-xl transition-all"
+          >
+            Refresh Page
+          </button>
         </div>
       </div>
     )
   }
 
+  // Everything valid - Render the Portal
   return (
     <PortalClient
       show={show}
@@ -91,5 +100,15 @@ export default async function PortalPage({
       materials={materials}
       initialToken={token}
     />
+  )
+}
+
+function AlertCircle({ size }: { size: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <line x1="12" y1="8" x2="12" y2="12"/>
+      <line x1="12" y1="16" x2="12.01" y2="16"/>
+    </svg>
   )
 }
