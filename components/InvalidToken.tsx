@@ -25,7 +25,7 @@ export function InvalidToken() {
              <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/20">
                 <Icons.Logo />
              </div>
-             <span className="text-2xl font-black tracking-tighter italic uppercase underline decoration-indigo-600/50 decoration-4 underline-offset-4">ShowReady</span>
+             <span className="text-2xl font-black tracking-tighter italic uppercase underline decoration-indigo-600/50 decoration-4 underline-offset-4">PS-promotion</span>
           </div>
           <div className="text-[10px] font-black text-red-500 border border-red-500/20 px-5 py-2 rounded-full uppercase tracking-[0.3em] bg-red-500/5 shadow-[0_0_20px_rgba(239,68,68,0.1)]">
              System Error &bull; E-404
@@ -107,7 +107,7 @@ export function InvalidToken() {
         </p>
         
         <div className="flex items-center gap-2 group transition-all">
-           <span className="text-sm font-black text-white/20 tracking-tighter italic uppercase group-hover:text-red-500">ShowReady</span>
+           <span className="text-sm font-black text-white/20 tracking-tighter italic uppercase group-hover:text-red-500">PS-promotion</span>
         </div>
       </footer>
     </div>

@@ -160,16 +160,17 @@ export function PortalClient({ show, artist, materials: initialMaterials, token 
                   <Icons.Logo />
                </div>
                <div>
-                  <span className="text-xl font-black tracking-tighter italic uppercase block leading-none mb-1">ShowReady</span>
+                  <p className="text-[9px] font-black tracking-widest text-white/30 uppercase mb-1">Production Hub</p>
+                  <span className="text-2xl font-black tracking-tighter italic uppercase underline decoration-indigo-600/50 decoration-4 underline-offset-4">PS-promotion</span>
                   <span className="text-[9px] font-black tracking-[0.3em] text-white/30 uppercase">Artist Portal</span>
                </div>
             </div>
             
             <div className="flex items-center gap-8">
-               <div className="hidden md:flex flex-col items-end">
-                  <span className="text-[9px] font-black uppercase tracking-widest text-white/30 mb-1 leading-none">Primary Production</span>
-                  <span className="text-sm font-bold tracking-tight">{show.venue_name}</span>
-               </div>
+               <div className="flex flex-col items-end px-12 border-x border-white/10">
+                   <p className="text-[9px] font-black tracking-widest text-white/30 uppercase mb-1">Production Venue</p>
+                   <span className="text-sm font-bold tracking-tight text-white">{show?.venue_name || 'TBA'}</span>
+                </div>
                <div className="h-6 w-px bg-white/10" />
                <div className="flex flex-col items-start min-w-[60px]">
                   <span className="text-[9px] font-black uppercase tracking-widest text-indigo-400 mb-1 leading-none">Activity</span>
@@ -193,7 +194,7 @@ export function PortalClient({ show, artist, materials: initialMaterials, token 
               </div>
               <div className="h-4 w-px bg-slate-100" />
               <div className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-300">
-                 Reference ID: {show.show_date.replace(/-/g, '')}
+                 PS_PROMOTION_ENCRYPTION_ENABLED: {show.show_date.replace(/-/g, '')}
               </div>
            </motion.div>
            
@@ -296,7 +297,7 @@ export function PortalClient({ show, artist, materials: initialMaterials, token 
          <div className="max-w-6xl mx-auto flex flex-col items-center">
             <div className="flex items-center gap-2 opacity-20 hover:opacity-100 transition-opacity mb-12">
                <Icons.Logo />
-               <span className="text-xl font-black tracking-tighter italic uppercase text-white">ShowReady</span>
+               <span className="text-sm font-black text-white/20 tracking-tighter italic uppercase group-hover:text-red-500">PS-promotion</span>
             </div>
             
             <p className="text-[10px] font-black text-white/10 uppercase tracking-[0.5em] text-center max-w-sm leading-loose">

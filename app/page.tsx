@@ -25,7 +25,7 @@ export default async function PortalPage({
 
   // Preview Mode for immediate verification of the "Backbone" UI
   if (preview === 'true') {
-     const mockShow = { venue_name: "The Grand Arena", city: "London", show_date: "2026-06-15", show_time: "20:00", promoter_name: "ShowReady Global", promoter_email: "support@showready.com" }
+     const mockShow = { venue_name: "PS-PROMOTION ARENA", city: "London", show_date: "2026-06-15", show_time: "20:00", promoter_name: "PS-promotion Global", promoter_email: "production@ps-promotion.com" }
      const mockArtist = { name: "Sample Artist" }
      const mockMaterials = [
        { id: "1", item_name: "Technical Rider", status: "pending", deadline: "2026-06-01", portal_token: "mock-1" },
@@ -80,6 +80,7 @@ export default async function PortalPage({
     return (
       <div className="min-h-screen flex items-center justify-center bg-white p-10 text-center">
         <p className="text-gray-400 font-bold uppercase tracking-widest text-sm">
+           <span className="text-sm font-black text-white/20 tracking-tighter italic uppercase group-hover:text-red-500">PS-promotion</span>
           Disconnected. Please refresh your browser.
         </p>
       </div>
