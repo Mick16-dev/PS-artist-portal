@@ -18,7 +18,7 @@ export function Welcome() {
             </div>
             <span className="text-xl font-extrabold text-gray-900 tracking-tight">ShowReady</span>
           </div>
-          <p className="text-sm font-semibold text-gray-500">Artist Portal</p>
+          <p className="text-sm font-bold text-indigo-600">Artist Portal Live</p>
         </div>
       </nav>
 
