@@ -2,6 +2,7 @@ import { createClient } from '@supabase/supabase-js'
 import { PortalClient } from '@/components/PortalClient'
 import { InvalidToken } from '@/components/InvalidToken'
 import { ExpiredToken } from '@/components/ExpiredToken'
+import { Welcome } from '@/components/Welcome'
 
 // Server-side Supabase client for secure data fetching
 function getSupabase() {
@@ -18,9 +19,9 @@ export default async function PortalPage({
 }) {
   const { token } = await searchParams
 
-  // No token in URL
+  // No token in URL - Show Landing Page
   if (!token) {
-    return <InvalidToken />
+    return <Welcome />
   }
 
   const supabase = getSupabase()
