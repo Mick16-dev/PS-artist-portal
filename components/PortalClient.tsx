@@ -64,45 +64,51 @@ export function PortalClient({ show, artist, materials: initialMaterials, token 
   const [materials, setMaterials] = useState<Material[]>(initialMaterials)
   const [isSyncing, setIsSyncing] = useState(false)
 
+  // Standard 5-Document Production Blueprint
+  const productionBlueprint = [
+    { name: 'Primary Technical Rider', desc: 'Secure audio, monitor, and lighting patch.' },
+    { name: 'Stage Plot & Input List', desc: 'Physical positioning and channel mapping.' },
+    { name: 'Hospitality Specification', desc: 'Catering and green room requirements.' },
+    { name: 'High-Res Publicity Photo', desc: 'Mandatory for press and venue marketing.' },
+    { name: 'Insurance & PLI Certificate', desc: 'Mandatory public liability clearance.' }
+  ]
+
   const isPreview = token === 'preview-mode'
   
-  // Real industry-standard material logic
-  const materialsToRender = isPreview ? [
-    {
-      id: 'm1',
-      item_name: 'Primary Technical Rider',
-      description: 'Full audio, monitor requirements, and lighting patch.',
-      status: 'pending',
-      deadline: '2026-05-01',
-      portal_token: 'preview-1'
-    },
-    {
-      id: 'm2',
-      item_name: 'Stage Plot & Input List',
-      description: 'Physical positioning and channel mapping for FOH.',
-      status: 'pending',
-      deadline: '2026-05-01',
-      portal_token: 'preview-2'
-    },
-    {
-      id: 'm3',
-      item_name: 'Hospitality & Wellness Specification',
-      description: 'Catering, green room requirements, and dietary notes.',
-      status: 'submitted',
-      deadline: '2026-05-10',
-      submitted_at: '2024-04-03',
-      file_url: '#',
-      portal_token: 'preview-3'
-    },
-    {
-       id: 'm4',
-       item_name: 'Insurance & PLI Certification',
-       description: 'Mandatory public liability insurance for venue clearance.',
-       status: 'pending',
-       deadline: '2026-04-30',
-       portal_token: 'preview-4'
-    }
-  ] as Material[] : materials
+  const materialsToRender = isPreview ? productionBlueprint.map((b, i) => ({
+    id: `p-${i}`,
+    item_name: b.name,
+    description: b.desc,
+    status: i === 2 ? 'submitted' : 'pending',
+    deadline: '2026-05-01',
+    portal_token: `preview-${i}`,
+    file_url: '#'
+  })) as Material[] : materials
+
+  // Real-Time Production Sync
+  useEffect(() => {
+    if (isPreview) return
+
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    )
+
+    const channel = supabase
+      .channel('production-updates')
+      .on('postgres_changes', { 
+        event: '*', 
+        schema: 'public', 
+        table: 'materials',
+        filter: `portal_token=eq.${token}`
+      }, (payload) => {
+        // Instant refresh on any database change
+        window.location.reload() 
+      })
+      .subscribe()
+
+    return () => { supabase.removeChannel(channel) }
+  }, [token, isPreview])
 
   const submittedCount = materialsToRender.filter(m => m.status === 'submitted').length
   const totalCount = materialsToRender.length
