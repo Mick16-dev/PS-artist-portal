@@ -42,7 +42,7 @@ export function Welcome() {
            >
               Your Show. <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-br from-indigo-600 to-indigo-900">Seamless.</span>
-           </h1 >
+           </motion.h1>
 
            <motion.p 
              initial={{ opacity: 0, y: 20 }}
