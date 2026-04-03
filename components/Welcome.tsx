@@ -1,104 +1,118 @@
 'use client'
 
-import { Music, UploadCloud, ShieldCheck, ArrowRight } from 'lucide-react'
+import { Music, UploadCloud, ShieldCheck, ArrowRight, Zap, Target, Lock } from 'lucide-react'
+import { motion } from 'framer-motion'
 
 export function Welcome() {
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col antialiased">
-      {/* Navigation */}
-      <nav className="bg-white/80 backdrop-blur-md sticky top-0 z-20 border-b border-gray-100">
-        <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M9 18V5l12-2v13"/>
-                <circle cx="6" cy="18" r="3"/>
-                <circle cx="18" cy="16" r="3"/>
-              </svg>
+    <div className="min-h-screen bg-white flex flex-col font-sans selection:bg-indigo-100 selection:text-indigo-900 antialiased overflow-hidden">
+      {/* Dynamic Header */}
+      <nav className="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-50 flex items-center h-20 px-8 lg:px-12">
+        <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-gray-900 rounded-xl flex items-center justify-center shadow-lg shadow-gray-200">
+               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
             </div>
-            <span className="text-xl font-extrabold text-gray-900 tracking-tight">ShowReady</span>
+            <span className="text-2xl font-black text-gray-900 tracking-tighter italic">ShowReady</span>
           </div>
-          <p className="text-sm font-bold text-indigo-600">Artist Portal Live</p>
+          
+          <div className="text-[10px] font-black text-gray-400 bg-gray-50 px-4 py-2 rounded-full border border-gray-100 shadow-sm sm:flex gap-2 hidden uppercase tracking-widest">
+            Production &bull; Artist Portal
+          </div>
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <main className="flex-1 max-w-5xl mx-auto px-6 py-20 flex flex-col lg:flex-row items-center gap-16">
-        <div className="flex-1 space-y-8 text-center lg:text-left">
-          <div className="inline-flex items-center gap-2 bg-primary-50 text-primary-700 px-4 py-2 rounded-full text-sm font-bold animate-fade-in">
-            <Music size={16} />
-            Streamlined Material Collection
-          </div>
-          
-          <h1 className="text-5xl lg:text-7xl font-extrabold text-gray-900 leading-[1.1] tracking-tight animate-slide-up">
-            Your Show, <br />
-            <span className="text-primary-600">Simplified.</span>
-          </h1>
-          
-          <p className="text-xl text-gray-500 leading-relaxed max-w-xl mx-auto lg:mx-0 animate-slide-up delay-100">
-            ShowReady is the premium gateway for artists to manage documents, technical riders, and promo materials for their upcoming live dates. 
-          </p>
+      {/* Main Content */}
+      <main className="flex-1 flex flex-col items-center justify-center relative px-6 py-20 text-center">
+        <div className="max-w-5xl mx-auto space-y-12">
+           <motion.div
+             initial={{ opacity: 0, scale: 0.9 }}
+             animate={{ opacity: 1, scale: 1 }}
+             className="inline-flex items-center gap-3 bg-indigo-50 text-indigo-600 px-6 py-2.5 rounded-full text-xs font-black uppercase tracking-[0.2em] shadow-sm border border-indigo-100"
+           >
+              <Zap size={14} className="animate-pulse" />
+              Artist Material Management
+           </motion.div>
 
-          <div className="pt-4 flex flex-col sm:flex-row items-center gap-4 animate-slide-up delay-200">
-            <div className="text-sm text-gray-400 font-medium">
-              Access is available via your unique invite link provided by your promoter.
-            </div>
-          </div>
+           <motion.h1 
+             initial={{ opacity: 0, y: 30 }}
+             animate={{ opacity: 1, y: 0 }}
+             transition={{ delay: 0.1 }}
+             className="text-6xl lg:text-[7rem] font-black text-gray-900 leading-[0.95] tracking-tighter"
+           >
+              Your Show. <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-br from-indigo-600 to-indigo-900">Seamless.</span>
+           </h1 >
+
+           <motion.p 
+             initial={{ opacity: 0, y: 20 }}
+             animate={{ opacity: 1, y: 0 }}
+             transition={{ delay: 0.2 }}
+             className="text-xl lg:text-3xl text-gray-400 font-bold max-w-3xl mx-auto leading-relaxed tracking-tight"
+           >
+              ShowReady is the premium gateway for artists to securely manage technical riders, promo materials, and production documents.
+           </motion.p>
+
+           <motion.div 
+             initial={{ opacity: 0, y: 20 }}
+             animate={{ opacity: 1, y: 0 }}
+             transition={{ delay: 0.3 }}
+             className="pt-10 flex flex-col items-center space-y-6"
+           >
+              <div className="p-8 bg-gray-900 rounded-[2.5rem] shadow-2xl shadow-indigo-100 flex flex-col sm:flex-row items-center gap-8 max-w-xl border border-white/10 group">
+                 <div className="w-16 h-16 bg-white/10 text-white rounded-3xl flex items-center justify-center shrink-0 border border-white/20 group-hover:bg-indigo-600 transition-colors">
+                    <Lock size={28} />
+                 </div>
+                 <div className="text-left">
+                    <h3 className="text-white text-xl font-black mb-1">Access Required</h3>
+                    <p className="text-gray-400 font-medium leading-relaxed text-sm">
+                       This is a private production portal. Please use the unique secure link provided in your invite email from the promoter.
+                    </p>
+                 </div>
+              </div>
+           </motion.div>
         </div>
 
-        {/* Action Preview (Decorative) */}
-        <div className="hidden lg:block flex-1 w-full max-w-md animate-fade-in delay-300">
-          <div className="bg-white rounded-3xl shadow-xl shadow-primary-100 border border-gray-100 p-8 space-y-6 relative overflow-hidden group">
-            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-              <Music size={120} />
-            </div>
-            <div className="w-12 h-12 bg-success-50 rounded-2xl flex items-center justify-center">
-              <ShieldCheck className="text-success-600" size={24} />
-            </div>
-            <h3 className="text-2xl font-bold text-gray-900">Secure Submission</h3>
-            <p className="text-gray-500 leading-relaxed">
-              Every upload is encrypted and sent directly to your production team, ensuring no material is ever lost.
-            </p>
-            <div className="space-y-3 pt-4">
-              <div className="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
-                <div className="h-full w-2/3 bg-primary-600 rounded-full" />
-              </div>
-              <p className="text-xs font-bold text-gray-400 uppercase tracking-widest text-center">Artist Material Syncing</p>
-            </div>
-          </div>
+        {/* Dynamic Background Elements */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 opacity-5 blur-[120px] pointer-events-none">
+           <div className="w-[600px] h-[600px] bg-indigo-600 rounded-full" />
         </div>
       </main>
 
-      {/* Features Grid */}
-      <section className="bg-white border-t border-gray-100 py-24">
-        <div className="max-w-5xl mx-auto px-6 grid md:grid-cols-3 gap-12">
-          <div className="space-y-4">
-            <div className="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600">
-              <UploadCloud size={20} />
+      {/* Feature Section */}
+      <section className="bg-gray-50/50 border-t border-gray-100 py-24 px-8 lg:px-12">
+         <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-12 lg:gap-20">
+            <div className="space-y-6">
+               <div className="w-14 h-14 bg-white shadow-xl shadow-gray-200/50 rounded-2xl flex items-center justify-center text-indigo-600">
+                  <UploadCloud size={24} />
+               </div>
+               <h4 className="text-xl font-black text-gray-900 italic tracking-tight">Direct Injection</h4>
+               <p className="text-gray-500 font-medium leading-relaxed italic">Drag and drop your mission-critical files directly into our secure production cloud with real-time status syncing.</p>
             </div>
-            <h4 className="text-lg font-bold text-gray-900">Cloud Upload</h4>
-            <p className="text-gray-500 text-sm leading-relaxed">Drag-and-drop your tech riders and press kits directly from your device.</p>
-          </div>
-          <div className="space-y-4">
-            <div className="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600">
-              <ArrowRight size={20} />
+            
+            <div className="space-y-6">
+               <div className="w-14 h-14 bg-white shadow-xl shadow-gray-200/50 rounded-2xl flex items-center justify-center text-indigo-600">
+                  <Target size={24} />
+               </div>
+               <h4 className="text-xl font-black text-gray-900 italic tracking-tight">Live Milestone Tracking</h4>
+               <p className="text-gray-500 font-medium leading-relaxed italic">Instantly see what documents the production team has received and what is still needed for your upcoming dates.</p>
             </div>
-            <h4 className="text-lg font-bold text-gray-900">Live Status</h4>
-            <p className="text-gray-500 text-sm leading-relaxed">Real-time tracking of what your promoter has received and what is still needed.</p>
-          </div>
-          <div className="space-y-4">
-            <div className="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center text-amber-600">
-              < ShieldCheck size={20} />
+
+            <div className="space-y-6">
+               <div className="w-14 h-14 bg-white shadow-xl shadow-gray-200/50 rounded-2xl flex items-center justify-center text-indigo-600">
+                  <ShieldCheck size={24} />
+               </div>
+               <h4 className="text-xl font-black text-gray-900 italic tracking-tight">Encrypted Access</h4>
+               <p className="text-gray-500 font-medium leading-relaxed italic">No passwords, no friction. Your unique invite token ensures that your data is private and only accessible to authorized team members.</p>
             </div>
-            <h4 className="text-lg font-bold text-gray-900">Encrypted Links</h4>
-            <p className="text-gray-500 text-sm leading-relaxed">Private tokens ensure only authorized team members can access your data.</p>
-          </div>
-        </div>
+         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-12 text-center border-t border-gray-50 container mx-auto">
-        <p className="text-sm font-bold text-gray-400 uppercase tracking-widest">Powered by ShowReady Productions</p>
+      {/* Modern Footer */}
+      <footer className="py-16 border-t border-gray-100 flex flex-col items-center space-y-6">
+        <p className="text-[10px] font-black text-gray-300 uppercase tracking-[0.4em] text-center">
+           Powered by ShowReady Productions &bull; Made for Artists
+        </p>
       </footer>
     </div>
   )
