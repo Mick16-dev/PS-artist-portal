@@ -10,38 +10,38 @@ const config: Config = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#4f46e5',
           50: '#eef2ff',
           100: '#e0e7ff',
+          200: '#c7d2fe',
+          300: '#a5b4fc',
+          400: '#818cf8',
           500: '#6366f1',
           600: '#4f46e5',
           700: '#4338ca',
+          800: '#3730a3',
+          900: '#312e81',
         },
         success: {
-          DEFAULT: '#10b981',
           50: '#ecfdf5',
           100: '#d1fae5',
           500: '#10b981',
           600: '#059669',
         },
-        warning: {
-          DEFAULT: '#f59e0b',
-          50: '#fffbeb',
-          100: '#fef3c7',
-          500: '#f59e0b',
-          600: '#d97706',
-        },
         danger: {
-          DEFAULT: '#ef4444',
           50: '#fef2f2',
           100: '#fee2e2',
           500: '#ef4444',
           600: '#dc2626',
         },
+        warning: {
+          50: '#fffbeb',
+          500: '#f59e0b',
+          600: '#d97706',
+        },
       },
       fontFamily: {
-        sans: ['var(--font-geist-sans)', 'Inter', 'system-ui', 'sans-serif'],
-        mono: ['var(--font-geist-mono)', 'ui-monospace', 'SFMono-Regular'],
+        sans: ['var(--font-geist-sans)'],
+        mono: ['var(--font-geist-mono)'],
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-out',
