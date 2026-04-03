@@ -14,7 +14,7 @@ function getSupabase() {
 export default async function PortalPage({
   searchParams,
 }: {
-  searchParams: Promise<{ token?: string }>
+  searchParams: Promise<{ token?: string, preview?: string }>
 }) {
   const { token, preview } = await searchParams
 
@@ -91,7 +91,7 @@ export default async function PortalPage({
       show={show}
       artist={artist}
       materials={materials}
-      token={token}
+      token={token ?? 'preview-mode'}
     />
   )
 }
